@@ -3,7 +3,7 @@ Liri Node Application for HW8 UMN Bootcamp
 
 A Node.js application that runs in command line and can be used to access information through Twitter, Spotify, or IMDB.
 
-###Using Liri Node Application
+### Using Liri Node Application
 
 This application is run through your command line interface. Once you are in the proper directory, simply call the liri.js Javascript file using node.
 
@@ -12,7 +12,7 @@ node liri.js
 ```
 Once the application is running, you will be prompted for what command you would like the application to complete.
 
-![Menu image](images/menu_image.jpeg)
+![Menu image](/images/menu_image.jpeg)
 
 *my-tweets* will return, at most, the 20 most recent tweets by the app author.
 
