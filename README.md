@@ -12,7 +12,7 @@ node liri.js
 ```
 Once the application is running, you will be prompted for what command you would like the application to complete.
 
-![Menu image](/images/menu_image.jpeg)
+![Menu image](menu_image.jpeg)
 
 *my-tweets* will return, at most, the 20 most recent tweets by the app author.
 
