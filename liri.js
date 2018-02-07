@@ -66,46 +66,93 @@ inquirer.prompt([
 
 
 // Pulling most recent tweets
-function myTweets() {
-	var twitterParams = {screen_name: 'bootcamp123123'};
-	client.get('statuses/user_timeline', twitterParams, function(error, tweets, response) {
-		if (!error) {
-		  	console.log("YOUR RECENT TWEETS");
-		  	fs.appendFile("log.txt", "TWEET SEARCH\n", function(error) {});
-		  	console.log("-------------");
-		  	fs.appendFile("log.txt", "-------------\n", function(error) {});
+function myTweets(user) {
 
-		  	if (tweets.length < 20) {
+	var userQuery = "";
 
-			  	for (var i=0; i < tweets.length; i++) {
-				    console.log(tweets[i].text);
-				    fs.appendFile("log.txt", tweets[i].text + "\n", function(error) {});
-				    console.log(tweets[i].created_at);
-				    fs.appendFile("log.txt", tweets[i].created_at + "\n", function(error) {});
-				    console.log("-------------");
-				    fs.appendFile("log.txt", "-------------\n", function(error) {});
+	if (user === undefined) {
+
+		inquirer.prompt([
+				{
+				type: 'input', 
+				name: 'twitterUsername',
+				message: 'What username would you like to search?'
 				}
+		]).then(function(inquirerResponse) {
 
+			userQuery = inquirerResponse.twitterUsername; 
+
+			if (userQuery) {
+				var twitterParams = {screen_name: userQuery};
+
+				console.log("RECENT TWEETS FROM " + twitterParams.screen_name);
+				fs.appendFile("log.txt", "RECENT TWEETS FROM" + twitterParams.screen_name + "\n", function(error) {});
+				console.log("-------------");
+				fs.appendFile("log.txt", "-------------\n", function(error) {});
+
+				client.get('statuses/user_timeline', twitterParams, function(error, tweets, response) {
+					if (!error) {
+
+						twitterDisplay(tweets)
+					  
+					}
+
+					else {
+						console.log(error)
+					}
+
+				})
 			}
 
 			else {
+				var twitterParams = {screen_name: 'bootcamp123123'};
 
-				for (var i=0; i < 20; i++) {
-				    console.log(tweets[i].text);
-				    fs.appendFile("log.txt", tweets[i].text + "\n", function(error) {});
-				    console.log(tweets[i].created_at);
-				    fs.appendFile("log.txt", tweets[i].created_at + "\n", function(error) {});
-				    console.log("-------------");
-				    fs.appendFile("log.txt", "-------------\n", function(error) {});
-				}
+				console.log("DEFAULT TWEETS FROM " + twitterParams.screen_name);
+				fs.appendFile("log.txt", "RECENT TWEETS FROM" + twitterParams.screen_name + "\n", function(error) {});
+				console.log("-------------");
+				fs.appendFile("log.txt", "-------------\n", function(error) {});
+
+				client.get('statuses/user_timeline', twitterParams, function(error, tweets, response) {
+					if (!error) {
+
+						twitterDisplay(tweets)
+					}
+
+					else {
+						console.log(error)
+					}
+				})
 			}
-		}
 
-		else {
-			console.log(error)
-		}
 
-	});
+		})
+	}
+
+	else {
+
+		userQuery = user;
+
+		var twitterParams = {screen_name: userQuery};
+
+		console.log("DO-WHAT-IT-SAYS RECENT TWEETS FROM " + twitterParams.screen_name);
+		fs.appendFile("log.txt", "RECENT TWEETS FROM " + twitterParams.screen_name + "\n", function(error) {});
+		console.log("-------------");
+		fs.appendFile("log.txt", "-------------\n", function(error) {});
+
+		client.get('statuses/user_timeline', twitterParams, function(error, tweets, response) {
+			if (!error) {
+
+				twitterDisplay(tweets)
+			  
+			}
+
+			else {
+				console.log(error)
+			}
+
+		})
+
+	}
 
 }
 
@@ -125,7 +172,7 @@ function spotifySearch(song) {
 
 		]).then(function(inquirerResponse) {
 
-			var userQuery= inquirerResponse.songSearch;
+			userQuery= inquirerResponse.songSearch;
 
 			if (userQuery) {
 				spotify.search({ type: 'track', query: userQuery, limit: 1 }, function(error, data) {
@@ -324,7 +371,7 @@ function doThis() {
 }
 
 // --------------------------------------------------------
-// DISPLAY FUNCTIONS FOR MOVIE AND SONG SEARCH
+// DISPLAY FUNCTIONS FOR MOVIE, SONG, AND TWITTER SEARCH
 // --------------------------------------------------------
 
 
@@ -382,6 +429,35 @@ function songDisplay(search) {
 	fs.appendFile("log.txt", "-------------\n", function(error) {});
 
 }
+
+function twitterDisplay(tweets) {
+
+	if (tweets.length < 20) {
+
+	  	for (var i=0; i < tweets.length; i++) {
+		    console.log(tweets[i].text);
+		    fs.appendFile("log.txt", tweets[i].text + "\n", function(error) {});
+		    console.log(tweets[i].created_at);
+		    fs.appendFile("log.txt", tweets[i].created_at + "\n", function(error) {});
+		    console.log("-------------");
+		    fs.appendFile("log.txt", "-------------\n", function(error) {});
+		}
+
+	}
+
+	else {
+
+		for (var i=0; i < 20; i++) {
+		    console.log(tweets[i].text);
+		    fs.appendFile("log.txt", tweets[i].text + "\n", function(error) {});
+		    console.log(tweets[i].created_at);
+		    fs.appendFile("log.txt", tweets[i].created_at + "\n", function(error) {});
+		    console.log("-------------");
+		    fs.appendFile("log.txt", "-------------\n", function(error) {});
+		}
+	}
+
+} 
 
 
 

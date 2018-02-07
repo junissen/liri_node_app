@@ -14,7 +14,7 @@ Once the application is running, you will be prompted for what command you would
 
 ![Menu image](../master/images/menu_image.png)
 
-*my-tweets* will return, at most, the 20 most recent tweets by the app author.
+*my-tweets* will return a prompt for what Twitter username to search. Once the user inputs a username, the app will return, at most, the 20 most recent tweets by that username. If no song is entered on the prompt, the app will return a default search username.
 
 *spotify-this-song* will return a prompt for what song to search. Once the user inputs a song, the app will return the song artist, name, album and a preview link. If no song is entered on the prompt, the app will return a default search value.
 
